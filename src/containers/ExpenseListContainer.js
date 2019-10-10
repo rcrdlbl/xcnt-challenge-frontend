@@ -2,6 +2,8 @@ import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 
+import SingleExpense from '../components/SingleExpense'
+
 const EXPENSES = gql`
   {
     expenses {
@@ -28,9 +30,7 @@ function ExpenseListContainer() {
 
   console.log(data.expenses)
 
-  return (
-    <p>loaded, check console</p>
-  )
+  return data.expenses.map((expense) => (<SingleExpense key={expense.id} expense={expense}/>))
 }
 
 export default ExpenseListContainer
