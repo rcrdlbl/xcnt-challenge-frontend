@@ -1,9 +1,17 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
+
+import ExpenseListContainer from './ExpenseListContainer.js'
+
+const AllExpensesWrapper = styled.div`
+`
 
 class AllExpenses extends Component {
   render() {
     return(
-      <h1>All Expenses List In A Few Min</h1>
+      <AllExpensesWrapper>
+        <ExpenseListContainer />
+      </AllExpensesWrapper>
     )
   }
 }
