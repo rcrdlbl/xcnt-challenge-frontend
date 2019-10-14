@@ -37,23 +37,26 @@ function ExpenseListContainer() {
 
   if (loading) return <h1>Loading</h1>
 
+
  return (
     <ExpenseList
       entries={data.expensesConnection.edges || []}
       onLoadMore={ () =>
         fetchMore({
           variables: {
-            cursor: data.expenses.pageInfo.endCursor
+            cursor: data.expensesConnection.pageInfo.endCursor
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
+            console.log(fetchMoreResult)
+            console.log(previousResult)
             const newEdges = fetchMoreResult.expensesConnection.edges
             const pageInfo = fetchMoreResult.expensesConnection.pageInfo
 
             return newEdges.length
               ? {
-                expenses: {
-                    __typename: previousResult.expenses.__typename,
-                    edges: [...previousResult.expenses.edges, ...newEdges],
+                expensesConnection: {
+                    __typename: previousResult.expensesConnection.__typename,
+                    edges: [...previousResult.expensesConnection.edges, ...newEdges],
                     pageInfo
                   }
                 }

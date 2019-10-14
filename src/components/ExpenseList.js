@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import SingleExpense from './SingleExpense';
 
 
+
+
 class ExpenseList extends Component {
 
   buildList(expenses) {
@@ -12,6 +14,7 @@ class ExpenseList extends Component {
     return(
       <>
         {this.buildList(this.props.entries)}
+        <button onClick={this.props.onLoadMore}>Load More</button>
       </>
     )
   }
