@@ -2,35 +2,67 @@ import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 
-import SingleExpense from '../components/SingleExpense'
+import ExpenseList from '../components/ExpenseList'
 
-const EXPENSES = gql`
-  {
-    expenses {
-      id
-      amount
-      createdAt
-      approved
-      currency
-      description
-      employee {
+const EXPENSES_QUERY = gql`
+query Expenses($cursor: String) {
+  expensesConnection(first: 20, after: $cursor) {
+    edges {
+      node {
         id
-        firstName
-        lastName
+        amount
+        createdAt
+        approved
+        currency
+        description
+        employee {
+          id
+          firstName
+          lastName
+        }
       }
     }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
   }
+}
 `
 
 function ExpenseListContainer() {
-  const { loading, error, data } = useQuery(EXPENSES)
+  const { data, loading, fetchMore } = useQuery(
+    EXPENSES_QUERY
+  );
 
   if (loading) return <h1>Loading</h1>
-  if (error) return <h1>Error</h1>
 
-  console.log(data.expenses)
+ return (
+    <ExpenseList
+      entries={data.expensesConnection.edges || []}
+      onLoadMore={ () =>
+        fetchMore({
+          variables: {
+            cursor: data.expenses.pageInfo.endCursor
+          },
+          updateQuery: (previousResult, { fetchMoreResult }) => {
+            const newEdges = fetchMoreResult.expensesConnection.edges
+            const pageInfo = fetchMoreResult.expensesConnection.pageInfo
 
-  return data.expenses.map((expense) => (<SingleExpense key={expense.id} expense={expense}/>))
+            return newEdges.length
+              ? {
+                expenses: {
+                    __typename: previousResult.expenses.__typename,
+                    edges: [...previousResult.expenses.edges, ...newEdges],
+                    pageInfo
+                  }
+                }
+              : previousResult;
+          }
+        })
+      }
+      />
+  )
 }
 
 export default ExpenseListContainer
