@@ -6,7 +6,7 @@ const ButtonGroup = styled.div`
 `
 
 const ApproveButton = styled.button`
-  background-color: #0A840A;
+  background-color: ${props => props.theme.darkGreen};
   width: 50%;
   color: white;
   font-size: 1.2rem;

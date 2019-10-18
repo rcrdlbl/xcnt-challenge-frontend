@@ -1,6 +1,6 @@
 import React from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import styled from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 import { gql } from 'apollo-boost'
 
 import ApprovalButtons from './ApprovalButtons'
@@ -11,6 +11,7 @@ const ExpenseWrapper = styled.div`
   overflow: hidden;
   border: 1px solid black;
   border-radius: 10px;
+  background-color: ${(props) => props.theme.white};
 `
 
 const UPDATE_APPROVED = gql`
@@ -28,6 +29,15 @@ const UPDATE_APPROVED = gql`
 `
 
 const SingleExpense = (props) => {
+
+  const theme = {
+    white: "#FFF",
+    offWhite: "rgb(251, 248, 244)",
+    offBlack: "#292929",
+    lightGreen: "#6cb862",
+    darkGreen: "#439159"
+  }
+
   const [updateApproved, { data }] = useMutation(UPDATE_APPROVED)
 
   let expenseApprovedString = "Awaiting Approval"
@@ -41,19 +51,21 @@ const SingleExpense = (props) => {
   }
 
   return(
-    <ExpenseWrapper>
-      <p>
-        {props.expense.employee.firstName} {props.expense.employee.lastName}
-      </p>
-      <p>
-        {props.expense.amount} {props.expense.currency}
-      </p>
-      <p>
-        {expenseApprovedString}
-      </p>
-      <p>{props.expense.description}</p>
-      <ApprovalButtons id={props.expense.id} updateApproved={updateApproved} />
-    </ExpenseWrapper>
+    <ThemeProvider theme={theme}>
+      <ExpenseWrapper>
+        <p>
+          {props.expense.employee.firstName} {props.expense.employee.lastName}
+        </p>
+        <p>
+          {props.expense.amount} {props.expense.currency}
+        </p>
+        <p>
+          {expenseApprovedString}
+        </p>
+        <p>{props.expense.description}</p>
+        <ApprovalButtons id={props.expense.id} updateApproved={updateApproved} />
+      </ExpenseWrapper>
+    </ThemeProvider>
   )
 }
 
