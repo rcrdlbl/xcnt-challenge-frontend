@@ -24,8 +24,14 @@ const DeclineButton = styled.button`
 const ApprovalButtons = (props) => {
   return (
     <ButtonGroup>
-      <DeclineButton>Decline</DeclineButton>
-      <ApproveButton>Approve</ApproveButton>
+      <DeclineButton onClick={e => {
+          e.preventDefault()
+          props.updateApproved({ variables: { approved: false, id: props.id } })
+        }}>Decline</DeclineButton>
+      <ApproveButton onClick={e => {
+          e.preventDefault()
+          props.updateApproved({ variables: { approved: true, id: props.id } })
+        }}>Approve</ApproveButton>
     </ButtonGroup>
   )
 }

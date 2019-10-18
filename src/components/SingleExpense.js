@@ -52,7 +52,7 @@ const SingleExpense = (props) => {
         {expenseApprovedString}
       </p>
       <p>{props.expense.description}</p>
-      <ApprovalButtons />
+      <ApprovalButtons id={props.expense.id} updateApproved={updateApproved} />
     </ExpenseWrapper>
   )
 }
