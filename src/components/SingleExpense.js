@@ -30,6 +30,16 @@ const UPDATE_APPROVED = gql`
 const SingleExpense = (props) => {
   const [updateApproved, { data }] = useMutation(UPDATE_APPROVED)
 
+  let expenseApprovedString = "Awaiting Approval"
+
+  if (props.expense.approved === true) {
+    expenseApprovedString = "Approved"
+  }
+
+  if (props.expense.approved === false) {
+    expenseApprovedString = "Declined"
+  }
+
   return(
     <ExpenseWrapper>
       <p>
@@ -37,6 +47,9 @@ const SingleExpense = (props) => {
       </p>
       <p>
         {props.expense.amount} {props.expense.currency}
+      </p>
+      <p>
+        {expenseApprovedString}
       </p>
       <p>{props.expense.description}</p>
       <ApprovalButtons />
