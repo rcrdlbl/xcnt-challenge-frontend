@@ -6,18 +6,21 @@ const ButtonGroup = styled.div`
 `
 
 const ApproveButton = styled.button`
-  background-color: ${props => props.theme.darkGreen};
+  background-color: ${props => props.theme.lightGreen};
+  color: ${props => props.theme.white};
   width: 50%;
-  color: white;
-  font-size: 1.2rem;
+  font-size: 1.05rem;
+  font-weight: bold;
   border: none;
 `
 
 const DeclineButton = styled.button`
-  background-color: #900000;
+  background-color: ${props => props.theme.darkRed};
+  color: ${props => props.theme.white};
   width: 50%;
   color: white;
-  font-size: 1.2rem;
+  font-size: 1.05rem;
+  font-weight: bold;
   border: none;
 `
 

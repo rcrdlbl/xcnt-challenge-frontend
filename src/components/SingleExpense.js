@@ -5,6 +5,7 @@ import { gql } from 'apollo-boost'
 
 import ApprovalButtons from './ApprovalButtons'
 
+// Styles
 const ExpenseWrapper = styled.div`
   margin: 0.75em;
   padding: 0;
@@ -14,6 +15,13 @@ const ExpenseWrapper = styled.div`
   background-color: ${(props) => props.theme.white};
 `
 
+const ApprovalBadge = styled.div`
+  font-weight: bolder;
+  font-style: oblique;
+  color: ${(props) => props.theme.lightRed}
+`
+
+// Mutations
 const UPDATE_APPROVED = gql`
   mutation UpdateApproved($id: ID!, $approved:Boolean!) {
     updateExpenseApproved(input: {id: $id, approved: $approved}) {
@@ -28,6 +36,7 @@ const UPDATE_APPROVED = gql`
   }
 `
 
+
 const SingleExpense = (props) => {
 
   const theme = {
@@ -35,7 +44,10 @@ const SingleExpense = (props) => {
     offWhite: "rgb(251, 248, 244)",
     offBlack: "#292929",
     lightGreen: "#6cb862",
-    darkGreen: "#439159"
+    darkGreen: "#439159",
+    seafoam: "#54D5AF",
+    lightRed: "#FF4F00",
+    darkRed: "#A53030"
   }
 
   const [updateApproved, { data }] = useMutation(UPDATE_APPROVED)
@@ -59,9 +71,7 @@ const SingleExpense = (props) => {
         <p>
           {props.expense.amount} {props.expense.currency}
         </p>
-        <p>
-          {expenseApprovedString}
-        </p>
+        <ApprovalBadge>{expenseApprovedString}</ApprovalBadge>
         <p>{props.expense.description}</p>
         <ApprovalButtons id={props.expense.id} updateApproved={updateApproved} />
       </ExpenseWrapper>
