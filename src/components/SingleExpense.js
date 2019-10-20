@@ -28,10 +28,14 @@ const EmployeeName = styled.div`
 `
 
 const ApprovalBadge = styled.div`
-  padding-left: 1em;
+  display: inline;
+  margin-left: 1em;
+  padding: 0.25em;
+  border-radius: 5px;
   font-weight: bolder;
   font-style: oblique;
-  color: ${(props) => props.theme.lightRed};
+  color: ${(props) => props.theme.offWhite};
+  background-color: ${(props) => props.theme.badgeBackground};
   transition: 1s all ease-in-out;
 
 `
@@ -81,21 +85,24 @@ const SingleExpense = (props) => {
     lightRed: "#FF4F00",
     darkRed: "#A53030",
     baseBackground: "#f5f5f5",
-    baseFontColor: "#292929"
+    baseFontColor: "#292929",
+    badgeBackground: "#FF4F00"
   }
 
   if (props.expense.approved === true) {
     theme.baseBackground = "#B9FFAF"
     theme.baseFontColor = "#00450D"
+    theme.badgeBackground = "#00450D"
   }
 
   if (props.expense.approved === false) {
     theme.baseBackground = "#FFAFAF"
     theme.baseFontColor = "#590000"
+    theme.badgeBackground = "#590000"
   }
 
 
-  // Query
+  // Query Functions
 
   const [updateApproved, { data }] = useMutation(UPDATE_APPROVED)
 
