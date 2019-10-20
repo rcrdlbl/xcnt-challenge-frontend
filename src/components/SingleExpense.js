@@ -13,38 +13,44 @@ const ExpenseWrapper = styled.div`
   overflow: hidden;
   border: none;
   border-radius: 10px;
-  background-color: ${(props) => props.theme.grey};
+  background-color: ${(props) =>  props.theme.baseBackground};
   -webkit-box-shadow: 1px 2px 10px 6px rgba(0,0,0,0.39);
   box-shadow: 1px 2px 10px 6px rgba(0,0,0,0.39);
+  transition: 1s all ease-in-out;
 `
 
 const EmployeeName = styled.div`
-  color: ${(props) => props.theme.offBlack};
+  color: ${(props) => props.theme.baseFontColor};
   display: inline;
   margin-left: 1em;
   border-radius: 10px;
+  transition: 1s all ease-in-out;
 `
 
 const ApprovalBadge = styled.div`
   padding-left: 1em;
   font-weight: bolder;
   font-style: oblique;
-  color: ${(props) => props.theme.lightRed}
+  color: ${(props) => props.theme.lightRed};
+  transition: 1s all ease-in-out;
+
 `
 
 const Price = styled.div`
-  color: ${(props) => props.theme.offBlack};
+  color: ${(props) => props.theme.baseFontColor};
   padding: 1em;
+  transition: 1s all ease-in-out;
 `
 
 const Description = styled.div`
-  color: ${(props) => props.theme.offBlack};
+  color: ${(props) => props.theme.baseFontColor};
   padding: 1em;
+  transition: 1s all ease-in-out;
 `
 
 // Mutations
 const UPDATE_APPROVED = gql`
-  mutation UpdateApproved($id: ID!, $approved:Boolean!) {
+  mutation UpdateApproved($id: ID!, $approved: Boolean!) {
     updateExpenseApproved(input: {id: $id, approved: $approved}) {
       expense {
         id
@@ -60,6 +66,10 @@ const UPDATE_APPROVED = gql`
 
 const SingleExpense = (props) => {
 
+  let isLoading = false
+
+  // Theme for component and children
+
   const theme = {
     white: "#FFF",
     grey: "#f5f5f5",
@@ -69,10 +79,27 @@ const SingleExpense = (props) => {
     darkGreen: "#439159",
     seafoam: "#54D5AF",
     lightRed: "#FF4F00",
-    darkRed: "#A53030"
+    darkRed: "#A53030",
+    baseBackground: "#f5f5f5",
+    baseFontColor: "#292929"
   }
 
+  if (props.expense.approved === true) {
+    theme.baseBackground = "#B9FFAF"
+    theme.baseFontColor = "#00450D"
+  }
+
+  if (props.expense.approved === false) {
+    theme.baseBackground = "#FFAFAF"
+    theme.baseFontColor = "#590000"
+  }
+
+
+  // Query
+
   const [updateApproved, { data }] = useMutation(UPDATE_APPROVED)
+
+  // Badge Updating
 
   let expenseApprovedString = "Awaiting Approval"
 
@@ -83,6 +110,7 @@ const SingleExpense = (props) => {
   if (props.expense.approved === false) {
     expenseApprovedString = "Declined"
   }
+
 
   return(
     <ThemeProvider theme={theme}>
@@ -95,7 +123,7 @@ const SingleExpense = (props) => {
         </Price>
         <ApprovalBadge>{expenseApprovedString}</ApprovalBadge>
         <Description>{props.expense.description}</Description>
-        <ApprovalButtons id={props.expense.id} updateApproved={updateApproved} />
+        <ApprovalButtons id={props.expense.id} approved={props.expense.approved} updateApproved={updateApproved} isLoading={isLoading} />
       </ExpenseWrapper>
     </ThemeProvider>
   )

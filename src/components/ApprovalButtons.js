@@ -12,6 +12,7 @@ const ApproveButton = styled.button`
   font-size: 1.05rem;
   font-weight: bold;
   border: none;
+  padding: 0.25em;
 `
 
 const DeclineButton = styled.button`
@@ -22,9 +23,34 @@ const DeclineButton = styled.button`
   font-size: 1.05rem;
   font-weight: bold;
   border: none;
+  padding: 0.25em;
+`
+
+const UndoButton = styled.button`
+  background-color: ${props => props.theme.baseBackground};
+  color: ${props => props.theme.baseFontColor};
+  border: none;
+  border-top: 1px solid ${props => props.theme.baseFontColor};
+  width: 100%;
+  font-size: 1.05rem;
+  font-weight: bold;
+  padding: 0.25em;
+  transition: 1s all ease-in-out;
 `
 
 const ApprovalButtons = (props) => {
+  if (props.approved !== null) {
+    return (
+      <ButtonGroup>
+        <UndoButton onClick={e => {
+            e.preventDefault()
+            props.updateApproved({variables: {approved: !props.approved, id: props.id}})
+          }}>{props.approved ? "Decline" : "Approve"}
+        </UndoButton>
+      </ButtonGroup>
+    )
+  }
+
   return (
     <ButtonGroup>
       <DeclineButton onClick={e => {
