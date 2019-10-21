@@ -8,6 +8,7 @@ import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks';
 
 import AllExpenses from "./containers/AllExpenses"
+import EmployeeExpensesContainer from './containers/EmployeeExpensesContainer'
 
 const client = new ApolloClient({
   uri: 'http://localhost:3050/graphql'
@@ -18,6 +19,7 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <Switch>
+          <Route path="/employee/:id" component={EmployeeExpensesContainer} />
           <Route path="/">
             <AllExpenses />
           </Route>
