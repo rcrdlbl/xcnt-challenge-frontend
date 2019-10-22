@@ -31,11 +31,12 @@ query Expenses($cursor: String) {
 `
 
 function ExpenseListContainer() {
-  const { data, loading, fetchMore } = useQuery(
+  const { data, loading, error, fetchMore } = useQuery(
     EXPENSES_QUERY
   );
 
   if (loading) return <h1>Loading</h1>
+  if (error) return <h1>Error</h1>
 
 
  return (

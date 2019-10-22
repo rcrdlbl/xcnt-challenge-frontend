@@ -2,6 +2,10 @@ import React from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import styled, { ThemeProvider } from 'styled-components'
 import { gql } from 'apollo-boost'
+import { Link } from 'react-router-dom'
+
+import { Icon } from 'react-icons-kit'
+import { chevronRight } from 'react-icons-kit/typicons/chevronRight'
 
 import ApprovalButtons from './ApprovalButtons'
 
@@ -19,7 +23,7 @@ const ExpenseWrapper = styled.div`
   transition: 1s all ease-in-out;
 `
 
-const EmployeeName = styled.div`
+const EmployeeName = styled(Link)`
   color: ${(props) => props.theme.baseFontColor};
   display: inline;
   margin-left: 1em;
@@ -122,8 +126,8 @@ const SingleExpense = (props) => {
   return(
     <ThemeProvider theme={theme}>
       <ExpenseWrapper>
-        <EmployeeName>
-          {props.expense.employee.firstName} <b>{props.expense.employee.lastName}</b>
+        <EmployeeName to={"/employee/" + props.expense.employee.id} >
+          {props.expense.employee.firstName} <b>{props.expense.employee.lastName}</b><Icon icon={chevronRight} />
         </EmployeeName>
         <Price>
           <b>{props.expense.amount}</b> <i>{props.expense.currency}</i>
