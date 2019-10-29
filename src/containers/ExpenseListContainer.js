@@ -5,68 +5,90 @@ import { gql } from 'apollo-boost'
 import ExpenseList from '../components/ExpenseList'
 
 const EXPENSES_QUERY = gql`
-query Expenses($cursor: String) {
-  expensesConnection(first: 20, after: $cursor) {
-    edges {
-      node {
-        id
-        amount
-        createdAt
-        approved
-        currency
-        description
-        employee {
+  query Expenses($cursor: String, $sortDate: String, $sortAmount: String, $awaitingApproval: Boolean, $employeeId: ID) {
+    expenses(first: 20, after: $cursor, sortDate: $sortDate, sortAmount: $sortAmount, awaitingApproval: $awaitingApproval, employeeId: $employeeId) {
+      edges {
+        node {
           id
-          firstName
-          lastName
+          amount
+          createdAt
+          approved
+          currency
+          description
+          employee {
+            id
+            firstName
+            lastName
+          }
         }
       }
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
     }
   }
-}
 `
 
-function ExpenseListContainer() {
+function ExpenseListContainer(props) {
+
+  // Logic for sorting and filtering
+
+  let sortVars = {}
+
+  if (props.sortBy === "awaitingApproval" ) {
+    sortVars = { "awaitingApproval": true }
+  } else {
+    if (props.sortBy === "Date") {
+      sortVars = { "sortDate": props.sortDirection}
+    } else {
+      sortVars = { "sortAmount": props.sortDirection }
+    }
+  }
+
+  if (props.employee) {
+    sortVars["employeeId"] = props.id
+  }
+
+  // Query Hooks
+
   const { data, loading, error, fetchMore } = useQuery(
-    EXPENSES_QUERY
+    EXPENSES_QUERY, {
+      variables: sortVars
+    }
   );
 
   if (loading) return <h1>Loading</h1>
   if (error) return <h1>Error</h1>
 
+  // Refer to apollo graphql's pagination docs for an explanation of the pagination logic
 
- return (
-    <ExpenseList
-      entries={data.expensesConnection.edges || []}
-      onLoadMore={ () =>
-        fetchMore({
-          variables: {
-            cursor: data.expensesConnection.pageInfo.endCursor
-          },
-          updateQuery: (previousResult, { fetchMoreResult }) => {
-            console.log(fetchMoreResult)
-            console.log(previousResult)
-            const newEdges = fetchMoreResult.expensesConnection.edges
-            const pageInfo = fetchMoreResult.expensesConnection.pageInfo
+    return (
+       <ExpenseList
+         entries={data.expenses.edges || []}
+         onLoadMore={ () =>
+           fetchMore({
+             variables: {
+               cursor: data.expenses.pageInfo.endCursor
+             },
+             updateQuery: (previousResult, { fetchMoreResult }) => {
+               const newEdges = fetchMoreResult.expenses.edges
+               const pageInfo = fetchMoreResult.expenses.pageInfo
 
-            return newEdges.length
-              ? {
-                expensesConnection: {
-                    __typename: previousResult.expensesConnection.__typename,
-                    edges: [...previousResult.expensesConnection.edges, ...newEdges],
-                    pageInfo
-                  }
-                }
-              : previousResult;
-          }
-        })
-      }
-      />
-  )
+               return newEdges.length
+                 ? {
+                   expenses: {
+                       __typename: previousResult.expenses.__typename,
+                       edges: [...previousResult.expenses.edges, ...newEdges],
+                       pageInfo
+                     }
+                   }
+                 : previousResult;
+             }
+           })
+         }
+         />
+     )
 }
 
 export default ExpenseListContainer
