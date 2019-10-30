@@ -108,7 +108,7 @@ const SingleExpense = (props) => {
 
   // Query Functions
 
-  const [updateApproved, { data }] = useMutation(UPDATE_APPROVED)
+  const [updateApproved] = useMutation(UPDATE_APPROVED)
 
   // Badge Updating
 

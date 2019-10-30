@@ -4,17 +4,25 @@ import styled from 'styled-components'
 import { Icon } from 'react-icons-kit'
 import { arrowSortedDown } from 'react-icons-kit/typicons/arrowSortedDown'
 import { arrowSortedUp } from 'react-icons-kit/typicons/arrowSortedUp'
-
+import {arrowBack} from 'react-icons-kit/typicons/arrowBack'
 
 
 const SortWrapper = styled.div`
   top: 0;
   position: sticky;
   padding: 1em;
+  flex-wrap: none;
+
+  @media (max-width: 575px) {
+  }
 `
 
 const SortHeader = styled.h3`
   color: #292929
+
+  @media (max-width: 575px) {
+    font-size: 2.5em;
+  }
 `
 
 const SortButton = styled.div`
@@ -26,11 +34,32 @@ const SortButton = styled.div`
   :hover {
     color: ${props => props.active ? "#FF691A" : "#8F8F8F"}
   }
+
+  @media (max-width: 575px) {
+    font-size: 2em;
+  }
+`
+
+const HideButton = styled.div`
+  font-weight: bold;
+  color: #767676;
+  margin-bottom: 1em;
+  cursor: pointer;
+  display: none;
+
+  :hover {
+    color: #8F8F8F;
+  }
+
+  @media (max-width: 575px) {
+    font-size: 2em;
+    display: block;
+  }
 `
 
 const SortTools = (props) => {
 
-  const arrowIcon = props.sortDirection === "DESC" ? <Icon icon={arrowSortedDown} /> : <Icon icon={arrowSortedUp} />
+  const arrowIcon = props.sortDirection === "DESC" ? <Icon icon={arrowSortedDown} size="1em"/> : <Icon icon={arrowSortedUp} size="1em" />
 
   return (
     <SortWrapper>
@@ -58,6 +87,10 @@ const SortTools = (props) => {
       <SortButton active={props.sortBy === "awaitingApproval"} onClick={() => {
           props.changeSort("awaitingApproval", "DESC")
         }}>Awaiting Approval</SortButton>
+
+      <HideButton onClick={() => {
+          props.hideMenu()
+        }}><Icon icon={arrowBack} size="1em" />Hide</HideButton>
 
     </SortWrapper>
   )

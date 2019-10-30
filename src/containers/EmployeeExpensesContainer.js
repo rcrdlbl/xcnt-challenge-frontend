@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/react-hooks'
 
 import ExpenseListContainer from './ExpenseListContainer'
 import SortTools from '../components/SortTools'
+import SortMenuButton from '../components/SortMenuButton'
 
 // Styles
 
@@ -21,6 +22,15 @@ const SortWrapper = styled.div`
   top: 0;
   position: sticky;
   margin-right: 1.5em;
+
+  @media (max-width: 575px) {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    transform: ${props => props.menuVisibility ? "translate3d(0vw, 0, 0)" : "translate3d(-100vw, 0, 0)"};
+    transition: transform .3s cubic-bezier(0, .52, 0, 1);
+    background-color: #f5f5f5;
+  }
 `
 
 const EmployeeName = styled.div`
@@ -47,11 +57,23 @@ function EmployeeExpensesContainer(props) {
 
   const [sortBy, setSortBy] = useState("Date")
   const [sortDirection, setSortDirection] = useState("DESC")
+  const [menuVisibility, setMenuVisibility] = useState(false)
 
   const changeSort = (attribute, direction) => {
     setSortBy(attribute)
     setSortDirection(direction)
+    setMenuVisibility(false)
     window.scrollTo(0,0)
+  }
+
+  // Menu controls for mobile
+
+  const onSortMenuButtonClick = () => {
+    setMenuVisibility(true)
+  }
+
+  const hideMenu = () => {
+    setMenuVisibility(false)
   }
 
   // Load Employee Name
@@ -64,15 +86,18 @@ function EmployeeExpensesContainer(props) {
   if (error) return <h1>Error</h1>
 
   return(
-    <EmployeeExpenseListWrapper>
-      <SortWrapper>
-        <SortTools changeSort={changeSort} sortBy={sortBy} sortDirection={sortDirection}/>
-      </SortWrapper>
-      <MainContent>
-        <EmployeeName>{data.employee.firstName} {data.employee.lastName}</EmployeeName>
-        <ExpenseListContainer employee={true} id={props.match.params.id} sortBy={sortBy} sortDirection={sortDirection} />
-      </MainContent>
-    </EmployeeExpenseListWrapper>
+      <>
+        <SortMenuButton onSortMenuButtonClick={onSortMenuButtonClick}/>
+        <EmployeeExpenseListWrapper>
+          <SortWrapper menuVisibility={menuVisibility}>
+            <SortTools hideMenu={hideMenu} changeSort={changeSort} sortBy={sortBy} sortDirection={sortDirection}/>
+          </SortWrapper>
+          <MainContent>
+            <EmployeeName>{data.employee.firstName} {data.employee.lastName}</EmployeeName>
+            <ExpenseListContainer employee={true} id={props.match.params.id} sortBy={sortBy} sortDirection={sortDirection} />
+          </MainContent>
+        </EmployeeExpenseListWrapper>
+      </>
   )
 }
 

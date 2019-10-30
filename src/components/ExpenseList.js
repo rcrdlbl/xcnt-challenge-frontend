@@ -10,6 +10,7 @@ const LoadMore = styled.div`
   font-weight: bold;
   font-size: 1.4em;
   margin: 1.2em;
+  margin-bottom: 3em;
   background-color: #292929;
   color: #FBF8F4;
 `
