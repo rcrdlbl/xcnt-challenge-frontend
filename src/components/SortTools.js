@@ -6,7 +6,7 @@ import { arrowSortedDown } from 'react-icons-kit/typicons/arrowSortedDown'
 import { arrowSortedUp } from 'react-icons-kit/typicons/arrowSortedUp'
 import {arrowBack} from 'react-icons-kit/typicons/arrowBack'
 
-
+// Styles
 const SortWrapper = styled.div`
   top: 0;
   position: sticky;
@@ -40,6 +40,7 @@ const SortButton = styled.div`
   }
 `
 
+// Allows you to close out of menu on mobile
 const HideButton = styled.div`
   font-weight: bold;
   color: #767676;
@@ -59,6 +60,7 @@ const HideButton = styled.div`
 
 const SortTools = (props) => {
 
+  // Arrow icon indicating sort direction
   const arrowIcon = props.sortDirection === "DESC" ? <Icon icon={arrowSortedDown} size="1em"/> : <Icon icon={arrowSortedUp} size="1em" />
 
   return (

@@ -1,3 +1,21 @@
+# XCNT Challenge: Frontend
+
+This application is the frontend to an expense software created for a company.
+
+## Steps to install locally
+
+1. Clone or download this repository
+
+2. Run `yarn build` in the project folder
+
+4. Follow yarn's instructions to serve the app on a static server; but replace the final command with `serve -s build -p 3000`
+
+3. Make sure the [Backend](https://github.com/rcrdlbl/xcnt-challenge-backend) portion of this project is also running on your system
+
+4. Open a web browser and navigate to `http://localhost:3000`
+
+
+```
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -66,3 +84,4 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+```

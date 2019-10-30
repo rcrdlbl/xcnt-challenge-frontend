@@ -6,6 +6,7 @@ import {arrowBack} from 'react-icons-kit/typicons/arrowBack'
 import {tick} from 'react-icons-kit/typicons/tick'
 import {cross} from 'react-icons-kit/entypo/cross'
 
+// Styles
 const ButtonGroup = styled.div`
   width: 100%;
 `
@@ -56,6 +57,8 @@ const UndoButton = styled.button`
 `
 
 const ApprovalButtons = (props) => {
+  // Displays 2 buttons if not approved yet, otherwise will display a button to revert changes
+
   if (props.approved !== null) {
     return (
       <ButtonGroup>

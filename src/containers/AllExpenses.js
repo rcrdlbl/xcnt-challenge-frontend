@@ -5,6 +5,7 @@ import SortMenuButton from '../components/SortMenuButton'
 import ExpenseListContainer from './ExpenseListContainer.js'
 import SortTools from '../components/SortTools'
 
+// Styles
 const AllExpensesWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -37,6 +38,7 @@ class AllExpenses extends Component {
     menuVisibility: false
   }
 
+  // Changes sorting order
   changeSort = (attribute, direction) => {
     this.setState({
       sortBy: attribute,
@@ -46,6 +48,7 @@ class AllExpenses extends Component {
     window.scrollTo(0,0)
   }
 
+  // Mobile Menu Controls
   onSortMenuButtonClick = () => {
     this.setState({
       menuVisibility: true

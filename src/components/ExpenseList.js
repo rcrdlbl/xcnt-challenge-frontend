@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SingleExpense from './SingleExpense';
 import styled from 'styled-components';
 
+// Styles
 const LoadMore = styled.div`
   padding: 0.5em;
   border-radius: 10px;
