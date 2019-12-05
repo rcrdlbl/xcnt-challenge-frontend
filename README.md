@@ -1,6 +1,6 @@
 # XCNT Challenge: Frontend
 
-This application is the frontend to an expense software created for a company.
+This application is the frontend to a hypothetical expense software created as part of a coding challenge.
 
 ## Steps to install locally
 
