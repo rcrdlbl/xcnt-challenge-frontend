@@ -1,15 +1,15 @@
-import React from 'react';
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
-import { Icon } from 'react-icons-kit'
-import {arrowBack} from 'react-icons-kit/typicons/arrowBack'
-import {tick} from 'react-icons-kit/typicons/tick'
-import {cross} from 'react-icons-kit/entypo/cross'
+import { Icon } from "react-icons-kit";
+import { arrowBack } from "react-icons-kit/typicons/arrowBack";
+import { tick } from "react-icons-kit/typicons/tick";
+import { cross } from "react-icons-kit/entypo/cross";
 
 // Styles
 const ButtonGroup = styled.div`
   width: 100%;
-`
+`;
 
 const ApproveButton = styled.button`
   background-color: ${props => props.theme.lightGreen};
@@ -21,9 +21,9 @@ const ApproveButton = styled.button`
   padding: 0.25em;
 
   :focus {
-    outline: 0
+    outline: 0;
   }
-`
+`;
 
 const DeclineButton = styled.button`
   background-color: ${props => props.theme.darkRed};
@@ -36,9 +36,9 @@ const DeclineButton = styled.button`
   padding: 0.25em;
 
   :focus {
-    outline: 0
+    outline: 0;
   }
-`
+`;
 
 const UndoButton = styled.button`
   background-color: ${props => props.theme.baseBackground};
@@ -52,38 +52,55 @@ const UndoButton = styled.button`
   transition: 1s all ease-in-out;
 
   :focus {
-    outline: 0
+    outline: 0;
   }
-`
+`;
 
-const ApprovalButtons = (props) => {
+const ApprovalButtons = ({ approved, id, updateApproved }) => {
   // Displays 2 buttons if not approved yet, otherwise will display a button to revert changes
 
-  if (props.approved !== null) {
+  if (approved !== null) {
     return (
       <ButtonGroup>
-        <UndoButton onClick={e => {
-            e.preventDefault()
-            props.updateApproved({variables: {approved: !props.approved, id: props.id}})
-          }}>{props.approved ? "Decline" : "Approve"}
+        <UndoButton
+          onClick={e => {
+            e.preventDefault();
+            updateApproved({ variables: { approved: !approved, id } });
+          }}
+        >
+          {approved ? "Decline" : "Approve"}
           <Icon icon={arrowBack} />
         </UndoButton>
       </ButtonGroup>
-    )
+    );
   }
 
   return (
     <ButtonGroup>
-      <DeclineButton onClick={e => {
-          e.preventDefault()
-          props.updateApproved({ variables: { approved: false, id: props.id } })
-        }}>Decline <Icon icon={cross} /></DeclineButton>
-      <ApproveButton onClick={e => {
-          e.preventDefault()
-          props.updateApproved({ variables: { approved: true, id: props.id } })
-        }}>Approve <Icon icon={tick} /></ApproveButton>
+      <DeclineButton
+        onClick={e => {
+          e.preventDefault();
+          updateApproved({
+            variables: { approved: false, id }
+          });
+        }}
+      >
+        Decline 
+{' '}
+<Icon icon={cross} />
+      </DeclineButton>
+      <ApproveButton
+        onClick={e => {
+          e.preventDefault();
+          updateApproved({ variables: { approved: true, id } });
+        }}
+      >
+        Approve 
+{' '}
+<Icon icon={tick} />
+      </ApproveButton>
     </ButtonGroup>
-  )
-}
+  );
+};
 
-export default ApprovalButtons
+export default ApprovalButtons;

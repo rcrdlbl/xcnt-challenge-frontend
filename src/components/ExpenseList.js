@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import SingleExpense from './SingleExpense';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import styled from "styled-components";
+import SingleExpense from "./SingleExpense";
 
 // Styles
 const LoadMore = styled.div`
@@ -13,25 +13,24 @@ const LoadMore = styled.div`
   margin: 1.2em;
   margin-bottom: 3em;
   background-color: #292929;
-  color: #FBF8F4;
-`
-
-
+  color: #fbf8f4;
+`;
 
 class ExpenseList extends Component {
-
   buildList(expenses) {
-    return expenses.map((expense) => (<SingleExpense key={expense.node.id} expense={expense.node}/>))
+    return expenses.map(expense => (
+      <SingleExpense key={expense.node.id} expense={expense.node} />
+    ));
   }
 
   render() {
-    return(
+    return (
       <>
         {this.buildList(this.props.entries)}
         <LoadMore onClick={this.props.onLoadMore}>Load More</LoadMore>
       </>
-    )
+    );
   }
 }
 
-export default ExpenseList
+export default ExpenseList;

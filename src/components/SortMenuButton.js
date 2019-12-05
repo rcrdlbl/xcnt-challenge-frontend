@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
 const MenuButtonWrapper = styled.div`
   cursor: pointer;
@@ -9,8 +9,8 @@ const MenuButtonWrapper = styled.div`
   position: fixed;
   bottom: 10px;
   right: 10px;
-  color: #FFF;
-  background-color: #FF4F00;
+  color: #fff;
+  background-color: #ff4f00;
   border-radius: 30px;
   text-align: center;
   padding: 10px;
@@ -20,12 +20,12 @@ const MenuButtonWrapper = styled.div`
   @media (max-width: 575px) {
     display: block;
   }
-`
+`;
 
-const SortMenuButton = (props) => {
-  return(
-    <MenuButtonWrapper onClick={props.onSortMenuButtonClick}>Sort</MenuButtonWrapper>
-  )
-}
+const SortMenuButton = ({ onSortMenuButtonClick }) => {
+  return (
+    <MenuButtonWrapper onClick={onSortMenuButtonClick}>Sort</MenuButtonWrapper>
+  );
+};
 
-export default SortMenuButton
+export default SortMenuButton;
